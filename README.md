@@ -10,7 +10,7 @@ The MLX90614 sensor reads sky temperature (object temperature) and applies a cor
 Sky quality measure is based on SQM_example by Gabe Shaughnessy on library [https://github.com/gshau/SQM_TSL2591](https://github.com/gshau/SQM_TSL2591)
 
 > [!NOTE]
-> On first run, the program creates an access point with name "METEO-TEMP" creating a web server accessible on http://192.168.4.1 which allow to configure SSID/password, node name, and MQTT configuration. Once configured these parameters, the program connects to the configured WiFi and starts data capturing and submission. This AP can also been activated after a reset if the SETUP_PIN (GPIO 0) is down during a lapse of 5 seconds after reset.
+> On first run, the program creates an access point with name "METEO-TEMP" creating a web server accessible on http://192.168.4.1 which allow to configure SSID/password and node name. Once configured these parameters, the program connects to the configured WiFi and starts data capturing and submission. This AP can also been activated after a reset if the SETUP_PIN (GPIO 0) is down during a lapse of 5 seconds after reset.
 
 on normal operation, the program presents 4 web pages on the device IP address:
 	**http://ip_address/setup** - the setup page mentioned above
@@ -32,7 +32,7 @@ on normal operation, the program presents 4 web pages on the device IP address:
 - **port:** broker access port, 1883 by default
 - **user:** MQTT broker access user
 - **passwd:** MQTT broker access password
-- **topic:** topic to be used as base for MQTT messages (default:jeedom/%modname%, where %modname% is replaced by the name defined in WiFi section
+- **topic:** topic to be used as base for MQTT messages (default:jeedom/%modname%, where %modname% is replaced by the node name defined in WiFi section
 
 ### Weather Underground access parameters:
 Station ID and Station Key, see [https://www.wunderground.com/pws/installation-guide](https://www.wunderground.com/pws/installation-guide)
