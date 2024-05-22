@@ -18,9 +18,9 @@ on normal operation, the program presents 4 web pages on the device IP address:
 	**http://ip_address/data** - which returns all sensors data in JSON format
 
 ## Configurable parameters are:
-**Send interval:** num of seconds elapsed between sensors data reading and submission
-**Altitude:** altitude in meters. it is calculated to calculate sea level pressure
-**Radiance adjust:** multiplier for radiance adjustment
+**Send interval:** num of seconds elapsed between sensors data reading and submission<br>
+**Altitude:** altitude in meters. it is calculated to calculate sea level pressure<br>
+**Radiance adjust:** multiplier for radiance adjustment<br>
 **UV adjust:** multiplier for UV adjustment
 
 ### Sky temperature parameters
