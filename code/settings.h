@@ -24,6 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 #define ID_LENGTH 16
 #define KEY_LENGTH 16
 #define TIMEZONE_LENGTH 128
+#define SERVER_LENGTH 256
+
 
 #define MAGIC "WST\0"
 
@@ -49,7 +51,24 @@ class Settings {
     char    ntpserver[TIMEZONE_LENGTH];        // NTP server
     int     sendinterval;                      // Intervalo de envío a Wunderground (min)
     float   tempadjust;                        // Calibracion de temperatura
+    float   radadjust;                         // ajuste radiación solar
+    float   uvadjust;                          // ajuste UV
     float   altitude;                          // altitude over sea level 
+    int     minIR;                             // minimum IR read
+    int     minVis;                            // minimum Visible read
+    char    mqttbroker[SERVER_LENGTH];         // Address of MQTT broker server
+    char    mqtttopic[NAME_LENGTH];            // MQTT topic for Jeedom
+    char    mqttuser[NAME_LENGTH];             // MQTT account user
+    char    mqttpassword[NAME_LENGTH];         // MQTT account password
+    int     mqttport;                          // port of MQTT broker
+
+    float   cloudytemp;                        // sky temperature above it is considereded cloudy
+    float   k1, k2, k3, k4, k5, k6, k7;        // 'K' parameters for GY906 skyTempAdj() function
+    float   cloudthreshold;                    // limit for cloud index safe
+
+    float   sqmthreshold;                      // SQM threshold safe
+    float   luxthreshold;                      // luminosity safe threshold
+
     } data;
     
     Settings() {};
@@ -70,7 +89,31 @@ class Settings {
       strcpy(data.ntpserver,NTP_SERVER);
       data.sendinterval=1;
       data.tempadjust=0.0;
+      data.radadjust=1.0;
+      data.uvadjust=1.0;
       data.altitude=0.0;
+      data.minIR=1000;
+      data.minVis=1000;
+
+      data.mqttbroker[0]=0;
+      strcpy(data.mqtttopic, "jeedom/%modname%");
+      data.mqttuser[0]=0;
+      data.mqttpassword[0]=0;
+      data.mqttport=1883;
+
+      data.cloudytemp=-5.0;
+      data.k1=33.0;
+      data.k2=0.0;
+      data.k3=8.0;
+      data.k4=100.0;
+      data.k5=100.0;
+      data.k6=0.0;
+      data.k7=0.0;
+      data.cloudthreshold=30.0;
+
+      data.sqmthreshold=12.0;
+      data.luxthreshold=30.0;
+
       Save();
      }
     };

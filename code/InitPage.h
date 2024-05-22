@@ -41,3 +41,35 @@ const char INIT_page[] PROGMEM = R"=====(
 <div class="update">@@UPDATERESPONSE@@</div>
 </html>
 )=====";
+
+
+void handleSetup() {
+  DebugLn("handlesetup");
+  String s = FPSTR(INIT_page);
+  s.replace("@@SSID@@", settings.data.ssid);
+  s.replace("@@PSK@@", settings.data.psk);
+  s.replace("@@CLOCKNAME@@", settings.data.name);
+  s.replace("@@VERSION@@",FVERSION);
+  s.replace("@@UPDATERESPONSE@@", httpUpdateResponse);
+  httpUpdateResponse = "";
+  setupserver.send(200, "text/html", s);
+}
+
+void handleInitForm() {
+  DebugLn("handleInitForm");
+  DebugLn("mode "+String(WiFi.status()));
+
+  String t_ssid = setupserver.arg("ssid");
+  String t_psk = setupserver.arg("psk");
+  String t_name = setupserver.arg("clockname");
+  String(t_name).replace("+", " ");
+  t_ssid.toCharArray(settings.data.ssid,SSID_LENGTH);
+  t_psk.toCharArray(settings.data.psk,PSK_LENGTH);
+  t_name.toCharArray(settings.data.name,NAME_LENGTH);
+  httpUpdateResponse = "The configuration was updated.";
+  setupserver.sendHeader("Location", "/");
+  setupserver.send(302, "text/plain", "Moved");
+  settings.Save();
+  
+  ap_setup_done = 1;
+}
